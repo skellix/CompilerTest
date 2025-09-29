@@ -19,11 +19,11 @@ $(buildDir)/token.o: $(srcdir)/token/token.cc
 $(buildDir)/token_stream.o: $(srcdir)/token_stream/token_stream.cc
 	$(CC) -fPIC $(debug) -c $^ -o $@ -I$(srcdir) -I$(includeDir) -I$(buildDir)
 
-bin/compiler_test.exe: $(buildDir)/compiler_test.o $(buildDir)/lexer.o $(buildDir)/lexer_node.o $(buildDir)/token.o $(buildDir)/token_stream.o
+bin/main.exe: $(buildDir)/compiler_test.o $(buildDir)/lexer.o $(buildDir)/lexer_node.o $(buildDir)/token.o $(buildDir)/token_stream.o
 	$(CC) $(debug) $^ -o $@ -I$(srcdir) -I$(includeDir) -I$(buildDir)
 
-all: bin/compiler_test.exe
+all: bin/main.exe
 	echo done
 
 run: all
-	bin/compiler_test.exe -s test.src
+	bin/main.exe -s test.src

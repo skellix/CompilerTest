@@ -14,6 +14,12 @@ namespace token
         this->col_ = col;
     }
 
+    Token::Token(char c, int index, int row, int col, bool is_eof)
+    {
+        Token(c, index, row, col);
+        this->is_eof_ = is_eof;
+    }
+
     char Token::c()
     {
         return this->c_;

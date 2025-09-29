@@ -42,7 +42,46 @@ int main(int argc, char **argv)
 
     auto source = "1 + 1";
     auto token_stream = std::make_shared<token_stream::TokenStream>(source);
+
+    // token_stream->PrintDebugInfo();
+
     auto lexer = lexer::Lex(token_stream);
 
-    fprintf(stdout, "Done!\n");
+    if (lexer == nullptr)
+    {
+        fprintf(stderr, "Source file could not be lexed\n");
+        return 1;
+    }
+
+    auto first_node = lexer->GetNode(0);
+
+    if (first_node == nullptr)
+    {
+        fprintf(stderr, "Source file contains no tokens\n");
+        return 1;
+    }
+
+    auto operation_end = first_node->operation();
+
+    if (operation_end == nullptr)
+    {
+        auto token = first_node->token();
+        // fprintf(stderr, "Expected expression at %d:%d\n", token->row() + 1, token->col() + 1);
+        fprintf(stderr, "Expected expression at %d:%d\n", 1, 1);
+        return 1;
+    }
+
+    auto operation_end_token = operation_end->token();
+
+    if (operation_end_token->is_eof())
+    {
+        fprintf(stdout, "Lex successful!\n");
+    }
+    else
+    {
+        fprintf(stdout, "Lex failed!\n");
+        return 1;
+    }
+
+    return 0;
 }

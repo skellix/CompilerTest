@@ -17,6 +17,7 @@ namespace token_stream
         TokenStream(std::string input);
         int stream_length();
         token::Token *GetToken(int index);
+        void PrintDebugInfo();
     };
 }
 

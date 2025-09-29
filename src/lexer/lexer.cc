@@ -1,5 +1,7 @@
 #include "lexer.h"
 
+#include <stdio.h>
+
 #include <stdexcept>
 #include <memory>
 
@@ -12,6 +14,13 @@ namespace lexer
     {
         this->nodes_ = std::make_unique<std::vector<lexer_node::LexerNode>>();
         this->nodes_->reserve(token_stream->stream_length());
+
+        // fprintf(stdout, "stream_length = %d\n", token_stream->stream_length());
+
+        for (int i = 0 ; i < token_stream->stream_length() ; ++ i)
+        {
+            this->nodes_->push_back(lexer_node::LexerNode());
+        }
     }
 
     int Lexer::num_nodes()
@@ -36,6 +45,8 @@ namespace lexer
         // initialize the nodes
         for (int i = lexer->num_nodes() - 1 ; i >= 0 ; -- i)
         {
+            // fprintf(stdout, "i = %d\n", i);
+
             auto lexer_node = lexer->GetNode(i);
             lexer_node->set_token(token_stream->GetToken(i));
 

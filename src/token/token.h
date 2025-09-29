@@ -14,6 +14,7 @@ namespace token
     public:
         Token();
         Token(char c, int index, int row, int col);
+        Token(char c, int index, int row, int col, bool is_eof);
         char c();
         bool is_eof();
         int row();
