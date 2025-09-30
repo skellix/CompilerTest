@@ -4,6 +4,10 @@ namespace token
 {
     Token::Token() {
         this->is_eof_ = false;
+        this->c_ = 0;
+        this->index_ = 0;
+        this->row_ = 0;
+        this->col_ = 0;
     }
 
     Token::Token(char c, int index, int row, int col) {
@@ -16,8 +20,11 @@ namespace token
 
     Token::Token(char c, int index, int row, int col, bool is_eof)
     {
-        Token(c, index, row, col);
         this->is_eof_ = is_eof;
+        this->c_ = c;
+        this->index_ = index;
+        this->row_ = row;
+        this->col_ = col;
     }
 
     char Token::c()

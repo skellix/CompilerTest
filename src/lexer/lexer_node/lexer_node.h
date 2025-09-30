@@ -3,60 +3,62 @@
 
 #include "../../token/token.h"
 
+#include <memory>
+
 namespace lexer_node
 {
     class LexerNode
     {
-        token::Token *token_ = nullptr;
-        LexerNode *next_ = nullptr;
-        LexerNode *next_digit_ = nullptr;
-        LexerNode *next_whitespace_char_ = nullptr;
-        LexerNode *next_plus_ = nullptr;
-        LexerNode *next_minus_ = nullptr;
-        LexerNode *next_multiply_ = nullptr;
-        LexerNode *next_divide_ = nullptr;
-        LexerNode *next_whitespace_ = nullptr;
-        LexerNode *next_integer_ = nullptr;
-        LexerNode *next_lr_operator_ = nullptr;
-        LexerNode *next_operation_ = nullptr;
+        std::shared_ptr<token::Token> token_ = nullptr;
+        std::shared_ptr<LexerNode> next_ = nullptr;
+        std::shared_ptr<LexerNode> next_digit_ = nullptr;
+        std::shared_ptr<LexerNode> next_whitespace_char_ = nullptr;
+        std::shared_ptr<LexerNode> next_plus_ = nullptr;
+        std::shared_ptr<LexerNode> next_minus_ = nullptr;
+        std::shared_ptr<LexerNode> next_multiply_ = nullptr;
+        std::shared_ptr<LexerNode> next_divide_ = nullptr;
+        std::shared_ptr<LexerNode> next_whitespace_ = nullptr;
+        std::shared_ptr<LexerNode> next_integer_ = nullptr;
+        std::shared_ptr<LexerNode> next_lr_operator_ = nullptr;
+        std::shared_ptr<LexerNode> next_operation_ = nullptr;
 
     public:
         LexerNode();
-        token::Token *token();
-        void set_token(token::Token *token);
+        std::shared_ptr<token::Token> token();
+        void set_token(std::shared_ptr<token::Token> token);
 
-        LexerNode *next();
-        void set_next(LexerNode *next);
+        std::shared_ptr<LexerNode> next();
+        void set_next(std::shared_ptr<LexerNode> next);
 
-        LexerNode *digit();
-        void set_digit(LexerNode *next);
+        std::shared_ptr<LexerNode> digit();
+        void set_digit(std::shared_ptr<LexerNode> next);
 
-        LexerNode *whitespace_char();
-        void set_whitespace_char(LexerNode *next);
+        std::shared_ptr<LexerNode> whitespace_char();
+        void set_whitespace_char(std::shared_ptr<LexerNode> next);
 
-        LexerNode *plus();
-        void set_plus(LexerNode *next);
+        std::shared_ptr<LexerNode> plus();
+        void set_plus(std::shared_ptr<LexerNode> next);
 
-        LexerNode *minus();
-        void set_minus(LexerNode *next);
+        std::shared_ptr<LexerNode> minus();
+        void set_minus(std::shared_ptr<LexerNode> next);
 
-        LexerNode *multiply();
-        void set_multiply(LexerNode *next);
+        std::shared_ptr<LexerNode> multiply();
+        void set_multiply(std::shared_ptr<LexerNode> next);
 
-        LexerNode *divide();
-        void set_divide(LexerNode *next);
+        std::shared_ptr<LexerNode> divide();
+        void set_divide(std::shared_ptr<LexerNode> next);
 
-        LexerNode *whitespace();
-        void set_whitespace(LexerNode *next);
+        std::shared_ptr<LexerNode> whitespace();
+        void set_whitespace(std::shared_ptr<LexerNode> next);
 
-        LexerNode *integer();
-        void set_integer(LexerNode *next);
+        std::shared_ptr<LexerNode> integer();
+        void set_integer(std::shared_ptr<LexerNode> next);
 
-        LexerNode *lr_operator();
-        void set_lr_operator(LexerNode *next);
+        std::shared_ptr<LexerNode> lr_operator();
+        void set_lr_operator(std::shared_ptr<LexerNode> next);
 
-        LexerNode *operation();
-        void set_operation(LexerNode *next);
+        std::shared_ptr<LexerNode> operation();
+        void set_operation(std::shared_ptr<LexerNode> next);
     };
 }
 

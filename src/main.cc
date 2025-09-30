@@ -13,12 +13,13 @@ void ShowHelp() {
 int main(int argc, char **argv)
 {
     bool found_help_arg = false;
+    char *sourcePath = nullptr;
 
     for (int i = 0 ; i < argc ; ++ i)
     {
         char* arg = argv[i];
 
-        fprintf(stdout, "arg[%d] = \"%s\"\n", i, arg);
+        // fprintf(stdout, "arg[%d] = \"%s\"\n", i, arg);
 
         if (arg[0] == '-')
         {
@@ -27,6 +28,18 @@ int main(int argc, char **argv)
                 if (strncmp(arg + 2, "help", strlen("help")))
                 {
                     found_help_arg = true;
+                }
+            }
+            else if (arg[1] == 's')
+            {
+                if (i + 1 < argc)
+                {
+                    sourcePath = argv[i + 1];
+                }
+                else
+                {
+                    fprintf(stderr, "Expected source path after \"-s\"\n");
+                    return 1;
                 }
             }
         }
@@ -47,6 +60,8 @@ int main(int argc, char **argv)
 
     auto lexer = lexer::Lex(token_stream);
 
+    lexer->PrintDebugInfo();
+
     if (lexer == nullptr)
     {
         fprintf(stderr, "Source file could not be lexed\n");
@@ -66,8 +81,7 @@ int main(int argc, char **argv)
     if (operation_end == nullptr)
     {
         auto token = first_node->token();
-        // fprintf(stderr, "Expected expression at %d:%d\n", token->row() + 1, token->col() + 1);
-        fprintf(stderr, "Expected expression at %d:%d\n", 1, 1);
+        fprintf(stderr, "Expected expression at %d:%d\n", token->row() + 1, token->col() + 1);
         return 1;
     }
 

@@ -12,8 +12,7 @@ namespace token_stream
 {
     TokenStream::TokenStream(std::string input)
     {
-        this->stream_data_ = std::make_unique<std::vector<token::Token>>();
-        this->stream_data_->reserve(input.length() + 1);
+        this->stream_data_ = std::make_unique<std::vector<std::shared_ptr<token::Token>>>();
         int row = 0;
         int col = 0;
 
@@ -21,11 +20,7 @@ namespace token_stream
         {
             char c = input[i];
 
-            fprintf(stdout, "%d, %c\n", i, c);
-            // auto stream_data_item = this->stream_data_->at(i);
-            // stream_data_item.set(c, i, row, col);
-            // this->stream_data_->push_back(token::Token(c, i, row, col, false));
-            this->stream_data_->emplace_back(c, i, row, col, false);
+            this->stream_data_->push_back(std::make_shared<token::Token>(c, i, row, col, false));
 
             if (c == '\n')
             {
@@ -38,9 +33,7 @@ namespace token_stream
             }
         }
 
-        // this->stream_data_->at(this->stream_data_->size() - 1).set(0, input.length(), row, col, true);
-        // this->stream_data_->push_back(token::Token(0, input.length(), row, col, true));
-        this->stream_data_->emplace_back(0, input.length(), row, col, true);
+        this->stream_data_->push_back(std::make_shared<token::Token>(0, input.length(), row, col, true));
     }
 
     int TokenStream::stream_length()
@@ -48,14 +41,14 @@ namespace token_stream
         return this->stream_data_->size();
     }
 
-    token::Token *TokenStream::GetToken(int index)
+    std::shared_ptr<token::Token> TokenStream::GetToken(int index)
     {
         if (index < 0 || this->stream_data_->size() <= index)
         {
             throw std::invalid_argument("Index must be between 0 and streamLength");
         }
 
-        return &this->stream_data_->at(index);
+        return this->stream_data_->at(index);
     }
 
     void TokenStream::PrintDebugInfo()

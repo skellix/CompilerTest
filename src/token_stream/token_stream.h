@@ -11,12 +11,12 @@ namespace token_stream
 {
     class TokenStream
     {
-        std::unique_ptr<std::vector<token::Token>> stream_data_;
+        std::unique_ptr<std::vector<std::shared_ptr<token::Token>>> stream_data_;
 
     public:
         TokenStream(std::string input);
         int stream_length();
-        token::Token *GetToken(int index);
+        std::shared_ptr<token::Token> GetToken(int index);
         void PrintDebugInfo();
     };
 }
