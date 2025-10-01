@@ -41,12 +41,28 @@ namespace lexer
         return this->nodes_->at(index);
     }
 
+    inline std::string PadRightToWidth(std::shared_ptr<lexer_node::LexerNode> value, int width)
+    {
+        std::stringstream ss1;
+
+        ss1 << ((value != nullptr) ? value->token()->index() : 0);
+
+        auto current_length = ss1.tellp();
+
+        for (int i = current_length ; i < width ; ++ i)
+        {
+            ss1 << ' ';
+        }
+
+        return ss1.str();
+    }
+
     void Lexer::PrintDebugInfo()
     {
         std::vector<std::string> headers;
 
         headers.push_back("#");
-        headers.push_back("c");
+        headers.push_back("c  ");
         headers.push_back("digit");
         headers.push_back("whitespace_char");
         headers.push_back("plus");
@@ -77,32 +93,38 @@ namespace lexer
 
             std::stringstream ss;
 
-            // TODO: Fix the width formatting on these columns
+            ss << std::format("{}", token->index()) << " | ";
 
+            if (token->is_eof())
+            {
+                ss << "EOF";
+            }
+            else
+            {
+                ss << token->c() << "  ";
+            }
+            
             ss
-            << std::format("{}", token->index())
             << " | "
-            << token->c()
+            << PadRightToWidth(lexer_node->digit(), headers[2].length())
             << " | "
-            << ((lexer_node->digit() != nullptr) ? lexer_node->digit()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->whitespace_char(), headers[3].length())
             << " | "
-            << ((lexer_node->whitespace_char() != nullptr) ? lexer_node->whitespace_char()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->plus(), headers[4].length())
             << " | "
-            << ((lexer_node->plus() != nullptr) ? lexer_node->plus()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->minus(), headers[5].length())
             << " | "
-            << ((lexer_node->minus() != nullptr) ? lexer_node->minus()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->multiply(), headers[6].length())
             << " | "
-            << ((lexer_node->multiply() != nullptr) ? lexer_node->multiply()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->divide(), headers[7].length())
             << " | "
-            << ((lexer_node->divide() != nullptr) ? lexer_node->divide()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->whitespace(), headers[8].length())
             << " | "
-            << ((lexer_node->whitespace() != nullptr) ? lexer_node->whitespace()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->integer(), headers[9].length())
             << " | "
-            << ((lexer_node->integer() != nullptr) ? lexer_node->integer()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->lr_operator(), headers[10].length())
             << " | "
-            << ((lexer_node->lr_operator() != nullptr) ? lexer_node->lr_operator()->token()->index() : 0)
-            << " | "
-            << ((lexer_node->operation() != nullptr) ? lexer_node->operation()->token()->index() : 0)
+            << PadRightToWidth(lexer_node->operation(), headers[11].length())
             ;
 
             std::cout << ss.str() << std::endl;
